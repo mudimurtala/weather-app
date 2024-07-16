@@ -2,7 +2,6 @@ document.getElementById('weather-form').addEventListener('submit', function(even
     event.preventDefault();
     const city = document.getElementById('city-input').value;
     getWeather(city);
-    getSoilInfo(city);
 });
 
 function getWeather(city) {
@@ -11,7 +10,11 @@ function getWeather(city) {
 
     fetch(apiUrl)
         .then(response => response.json())
-        .then(data => displayWeather(data))
+        .then(data => {
+            displayWeather(data);
+            const { lon, lat } = data.coord;
+            getSoilData(lat, lon);
+        })
         .catch(error => console.error('Error fetching the weather data:', error));
 }
 
@@ -31,22 +34,36 @@ function displayWeather(data) {
     `;
 }
 
-function getSoilInfo(city) {
-    // Assuming you have a soil information API similar to the weather API
-    const soilApiUrl = `https://api.example.com/soil?city=${city}`;
+function getSoilData(lat, lon) {
+    const soilApiUrl = `https://api-test.openepi.io/soil/type?lon=${lon}&lat=${lat}`;
+    const corsProxy = 'https://corsproxy.io/?'; // Updated proxy
 
-    fetch(soilApiUrl)
-        .then(response => response.json())
-        .then(data => displaySoilInfo(data))
+    console.log('Fetching soil data from URL:', corsProxy + encodeURIComponent(soilApiUrl)); // Debugging line
+
+    fetch(corsProxy + encodeURIComponent(soilApiUrl))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Soil data received:', data); // Debugging line
+            displaySoilData(data);
+        })
         .catch(error => console.error('Error fetching the soil data:', error));
 }
 
-function displaySoilInfo(data) {
+function displaySoilData(data) {
+    const soilType = data.properties.most_probable_soil_type || 'N/A';
+    const soilPH = data.properties.ph || 'N/A';
+    const organicCarbon = data.properties.organic_carbon !== undefined ? data.properties.organic_carbon + '%' : 'N/A';
+
     const soilResult = document.getElementById('soil-result');
     soilResult.innerHTML = `
         <h2>Soil Information</h2>
-        <p>Soil Type: ${data.soilType}</p>
-        <p>Soil pH: ${data.ph}</p>
-        <p>Nutrient Levels: ${data.nutrients}</p>
+        <p>Soil Type: ${soilType}</p>
+        <p>Soil pH: ${soilPH}</p>
+        <p>Organic Carbon: ${organicCarbon}</p>
     `;
 }
