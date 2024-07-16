@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 800px; /* Increased width for better layout */
+    max-width: 800px;
     margin: auto;
     background: #444;
     padding: 20px;
@@ -47,13 +47,42 @@ button:hover {
 .info-container {
     display: flex;
     gap: 20px;
-    justify-content: center; /* Center the items horizontally */
+    justify-content: center;
 }
 
 .weather {
-    flex: 1; /* Take up half of the container */
+    flex: 1;
 }
 
 .soil {
-    flex: 1; /* Take up half of the container */
+    flex: 1;
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-width: 800px;
+}
+
+footer {
+    background-color: #333;
+    color: #f4f4f4;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: #28a745;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }

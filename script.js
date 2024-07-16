@@ -5,7 +5,7 @@ document.getElementById('weather-form').addEventListener('submit', function(even
 });
 
 function getWeather(city) {
-    const apiKey = '135726edf66e6dab84415856e97f5e1a';  // Replace with your actual API key
+    const apiKey = '135726edf66e6dab84415856e97f5e1a';
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     fetch(apiUrl)
@@ -36,9 +36,9 @@ function displayWeather(data) {
 
 function getSoilData(lat, lon) {
     const soilApiUrl = `https://api-test.openepi.io/soil/type?lon=${lon}&lat=${lat}`;
-    const corsProxy = 'https://corsproxy.io/?'; // Updated proxy
+    const corsProxy = 'https://corsproxy.io/?';
 
-    console.log('Fetching soil data from URL:', corsProxy + encodeURIComponent(soilApiUrl)); // Debugging line
+    console.log('Fetching soil data from URL:', corsProxy + encodeURIComponent(soilApiUrl));
 
     fetch(corsProxy + encodeURIComponent(soilApiUrl))
         .then(response => {
@@ -48,7 +48,7 @@ function getSoilData(lat, lon) {
             return response.json();
         })
         .then(data => {
-            console.log('Soil data received:', data); // Debugging line
+            console.log('Soil data received:', data);
             displaySoilData(data);
         })
         .catch(error => console.error('Error fetching the soil data:', error));
