@@ -8,12 +8,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Weather Dashboard</h1>
+        <h1>Weather & Soil Dashboard</h1>
         <form id="weather-form">
             <input type="text" id="city-input" placeholder="Enter city name" required>
-            <button type="submit">Get Weather</button>
+            <button type="submit">Get Info</button>
         </form>
-        <div id="weather-result"></div>
+        <div id="result-container">
+            <div id="weather-result" class="result"></div>
+            <div id="soil-result" class="result"></div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

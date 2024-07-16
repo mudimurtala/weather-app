@@ -2,6 +2,7 @@ document.getElementById('weather-form').addEventListener('submit', function(even
     event.preventDefault();
     const city = document.getElementById('city-input').value;
     getWeather(city);
+    getSoilInfo(city);
 });
 
 function getWeather(city) {
@@ -27,5 +28,25 @@ function displayWeather(data) {
         <p>Weather: ${data.weather[0].description}</p>
         <p>Humidity: ${data.main.humidity}%</p>
         <p>Wind Speed: ${data.wind.speed} m/s</p>
+    `;
+}
+
+function getSoilInfo(city) {
+    // Assuming you have a soil information API similar to the weather API
+    const soilApiUrl = `https://api.example.com/soil?city=${city}`;
+
+    fetch(soilApiUrl)
+        .then(response => response.json())
+        .then(data => displaySoilInfo(data))
+        .catch(error => console.error('Error fetching the soil data:', error));
+}
+
+function displaySoilInfo(data) {
+    const soilResult = document.getElementById('soil-result');
+    soilResult.innerHTML = `
+        <h2>Soil Information</h2>
+        <p>Soil Type: ${data.soilType}</p>
+        <p>Soil pH: ${data.ph}</p>
+        <p>Nutrient Levels: ${data.nutrients}</p>
     `;
 }
